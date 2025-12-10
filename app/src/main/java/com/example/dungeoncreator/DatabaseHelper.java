@@ -154,7 +154,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
+    public Dungeon getDungeonById(int id) {
+        Dungeon newDungeon = new Dungeon();
+        String selectStatement = "SELECT * FROM " + dungeon_header_table_name + " JOIN " + dungeon_layout_table_name + " on 'dungeonId' = 'dungeonId' WHERE dungeonId = '" + id + "';";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectStatement,null);
 
+        if (cursor.moveToFirst()) {
+            Log.d("",cursor.getString(0)+" "+cursor.getString(1)+" "+cursor.getString(2));
+        }
+        db.close();
+
+        return newDungeon;
+    }
 
 
 
