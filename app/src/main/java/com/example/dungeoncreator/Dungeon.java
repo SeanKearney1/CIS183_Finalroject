@@ -1,13 +1,14 @@
 package com.example.dungeoncreator;
 
 public class Dungeon {
-    private int category;
-    private int ownerId;
+    private int category = 0;
+    private int ownerId = -1;
     private int dungeonId = -1;
     private String name = "NEW DUNGEON";
     private int views = 0;
     private int likes = 0;
     private int dislikes = 0;
+    private int theme;
     private int[][] tiles = new int[DungeonData.getDungeonSize()][DungeonData.getDungeonSize()];
     private int[][] objects = new int[DungeonData.getDungeonSize()][DungeonData.getDungeonSize()];
     private int[][] enemies = new int[DungeonData.getDungeonSize()][DungeonData.getDungeonSize()];
@@ -15,7 +16,7 @@ public class Dungeon {
 
     public Dungeon() {}
 
-    public Dungeon(int c, int oi, int di, String n, int v, int l, int dl, int[][] t, int[][] ob, int[][] en, int[][] ite) {
+    public Dungeon(int c, int oi, int di, String n, int v, int l, int dl, int[][] t, int[][] ob, int[][] en, int[][] ite, int th) {
         category = c;
         ownerId = oi;
         dungeonId = di;
@@ -27,6 +28,7 @@ public class Dungeon {
         objects = ob;
         enemies = en;
         items = ite;
+        theme = th;
     }
 
     public int getCategory() {
@@ -115,5 +117,12 @@ public class Dungeon {
 
     public void setItems(int[][] items) {
         this.items = items;
+    }
+
+    public void setTheme(int t) {
+        theme = t;
+    }
+    public int getTheme() {
+        return theme;
     }
 }

@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background02"
     tools:context=".DungeonEditor">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dungeon Editor"
+        android:textColor="#FAF8F8"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +25,7 @@
         android:id="@+id/btn_dungeonEditor_back"
         android:layout_width="125dp"
         android:layout_height="75dp"
-        android:text="Back"
+        android:text="Done"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,9 +134,31 @@
             style="@android:style/Widget.DeviceDefault.GridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:horizontalSpacing="0dp"
+            android:horizontalSpacing="-1.75dp"
             android:stretchMode="none"
-            android:verticalSpacing="1dp" />
+            android:verticalSpacing="0dp" />
     </FrameLayout>
+
+    <Spinner
+        android:id="@+id/sp_dungeonEditor_brushMode"
+        android:layout_width="147dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111" />
+
+    <Spinner
+        android:id="@+id/sp_dungeonEditor_brushItem"
+        android:layout_width="183dp"
+        android:layout_height="27dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.11" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

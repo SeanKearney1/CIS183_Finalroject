@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,7 +21,11 @@ public class MainActivity extends AppCompatActivity {
     DatabaseHelper dbHelper;
     ListView lv_main_usernames;
 
+    Button btn_createAccount;
+
     ListViewUsernames LVAdapter;
+
+    ConstraintLayout main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lv_main_usernames = findViewById(R.id.lv_main_usernames);
+        btn_createAccount = findViewById(R.id.btn_main_createAccount);
+        main = findViewById(R.id.main);
+        main.getBackground().setFilterBitmap(false);
 
         dbHelper = new DatabaseHelper(this);
 
@@ -58,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 User user = dbHelper.getUserById((Integer)lv_main_usernames.getAdapter().getItem(position));
                 SessionData.setLoggedInUser(user);
                 startActivity(new Intent(MainActivity.this,MainMenu.class));
+            }
+        });
+        btn_createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CreateAccount.class));
             }
         });
     }

@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background01"
+    android:backgroundTintMode="multiply"
     tools:context=".MainMenu">
 
     <Button
@@ -58,23 +60,11 @@
         app:layout_constraintVertical_bias="0.618" />
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Menu"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
-
-    <TextView
         android:id="@+id/tv_menu_welcomeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome, Sean Kearney"
+        android:textColor="#FBFBFB"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,4 +72,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.075" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

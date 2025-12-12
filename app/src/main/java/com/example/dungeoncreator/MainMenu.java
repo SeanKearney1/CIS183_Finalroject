@@ -8,17 +8,21 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainMenu extends AppCompatActivity {
 
+
     Button btn_search;
     Button btn_createDungeon;
     Button btn_myDungeons;
     Button btn_back;
     TextView tv_menu_welcomeMessage;
+
+    ConstraintLayout main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,15 @@ public class MainMenu extends AppCompatActivity {
         btn_myDungeons = findViewById(R.id.btn_menu_myDungeons);
         btn_back = findViewById(R.id.btn_menu_back);
         tv_menu_welcomeMessage = findViewById(R.id.tv_menu_welcomeMessage);
+        main = findViewById(R.id.main);
+        main.getBackground().setFilterBitmap(false);
 
         OnClickListeners();
 
         tv_menu_welcomeMessage.setText("Welcome, "+SessionData.getLoggedInUser().getUsername()+"!");
+
+
+
     }
 
 
