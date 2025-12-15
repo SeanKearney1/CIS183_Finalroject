@@ -485,11 +485,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-
-
         db.execSQL("UPDATE " + dungeon_header_table_name + " SET name = '"+d.getName()+"',categoryId = '"+d.getCategory()+"',views = '"+d.getViews()+"',likes = '"+d.getLikes()+"' WHERE dungeonId = "+d.getDungeonId()+";");
-        db.execSQL("UPDATE " + dungeon_layout_table_name + " SET theme = '"+d.getTheme()+"', tiles = '"+str_tiles+"' WHERE dungeonID = "+d.getDungeonId()+";");
-        db.execSQL("UPDATE " + dungeon_entities_table_name + " SET items = '"+str_items+"', enemies = '"+str_enemies+"', objects = '"+str_objects+"' WHERE dungeonID = "+d.getDungeonId()+";");
+        db.execSQL("UPDATE " + dungeon_layout_table_name + " SET theme = '"+d.getTheme()+"', tiles = '"+str_tiles+"' WHERE dungeonId = "+d.getDungeonId()+";");
+        db.execSQL("UPDATE " + dungeon_entities_table_name + " SET items = '"+str_items+"', enemies = '"+str_enemies+"', objects = '"+str_objects+"' WHERE dungeonId = "+d.getDungeonId()+";");
 
         db.close();
 

@@ -28,9 +28,7 @@ public class ListViewYourDungeons extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return dungeons.get(position);
-    }
+    public Object getItem(int position) { return dungeons.get(position); }
 
     @Override
     public long getItemId(int position) {
