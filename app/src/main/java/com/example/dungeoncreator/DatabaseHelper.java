@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context c)
     {
-        super(c, database_name, null, 4);
+        super(c, database_name, null, 14);
     }
 
 
@@ -30,8 +30,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + users_table_name + " (userId integer primary key autoincrement not null, username varchar(64), fname varchar(64), lname varchar(64), favorites varchar(4096));");
         db.execSQL("CREATE TABLE " + dungeon_header_table_name + " (dungeonId integer primary key autoincrement not null, userId integer, name varchar(64), categoryId integer, views integer, likes integer, dislikes integer, foreign key (userId) references \" + users_table_name + \" (userId));");
-        db.execSQL("CREATE TABLE " + dungeon_layout_table_name + " (dungeonId integer, theme integer(3), tiles varchar(4096), foreign key (dungeonId) references \" + dungeon_header_table_name + \" (dungeonId));");
-        db.execSQL("CREATE TABLE " + dungeon_entities_table_name + " (dungeonId integer, items varchar(4096), enemies varchar(4096), objects varchar(4096), foreign key (dungeonId) references \" + dungeon_header_table_name + \" (dungeonId));");
+        db.execSQL("CREATE TABLE " + dungeon_layout_table_name + " (dungeonId integer primary key autoincrement not null, theme integer(3), tiles varchar(4096));");
+        db.execSQL("CREATE TABLE " + dungeon_entities_table_name + " (dungeonId integer primary key autoincrement not null, items varchar(4096), enemies varchar(4096), objects varchar(4096));");
     }
 
     @Override
@@ -167,7 +167,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (username.isEmpty()) { return -1; }
 
-        int userId = -1;
+        int userId = -2;
         String selectStatement = "SELECT userId FROM " + users_table_name + " WHERE username = '" + username + "';";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectStatement,null);
@@ -215,18 +215,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
-        selectStatement = "SELECT * FROM "+dungeon_layout_table_name+" WHERE EXISTS (SELECT dungeonId FROM "+dungeon_header_table_name+" WHERE dungeonID = '"+id+"');";
+        selectStatement = "SELECT * FROM "+dungeon_layout_table_name+" WHERE dungeonId = '"+id+"';";
         cursor = db.rawQuery(selectStatement,null);
         columns = new ArrayList<>();
 
+        Log.d("FUCKCCCC",selectStatement+"     "+cursor.getCount());
 
         if (cursor.moveToFirst()) {
 
-
+            Log.d("HEY!!!!",cursor.getString(0));
             columns.add(cursor.getColumnIndex("theme"));
             columns.add(cursor.getColumnIndex("tiles"));
 
             Log.d("THE THEEMEE",""+cursor.getInt(columns.get(0)));
+            Log.d("THE TILES",""+cursor.getInt(columns.get(1)));
 
             if (columns.get(0) != -1) { newDungeon.setTheme(cursor.getInt(columns.get(0))); }
             if (columns.get(1) != -1) { newDungeon.setTiles(GridDecompiler(cursor.getString(columns.get(1)))); }
@@ -235,7 +237,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-        selectStatement = "SELECT * FROM "+dungeon_entities_table_name+" WHERE EXISTS (SELECT dungeonId FROM "+dungeon_header_table_name+" WHERE dungeonID = '"+id+"');";
+        selectStatement = "SELECT * FROM "+dungeon_entities_table_name+" WHERE dungeonId = '"+id+"';";
         cursor = db.rawQuery(selectStatement,null);
         columns = new ArrayList<>();
 
@@ -440,37 +442,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String objects = GridCompiler(d.getObjects());
         String tiles = GridCompiler(d.getTiles());
 
-        int dungeonId = -1;
-
-
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO " + dungeon_header_table_name + " (userId, name, categoryId, views, likes, dislikes) VALUES ('"+d.getOwnerId()+"','"+d.getName()+"','"+d.getCategory()+"','0','0','0');");
-        db.close();
-
-
-
-
-        db = this.getReadableDatabase();
-        String selectStatement = "SELECT last_insert_rowid() FROM " + dungeon_header_table_name + ";";
-        Cursor cursor = db.rawQuery(selectStatement,null);
-        if (cursor.moveToFirst()) { dungeonId = cursor.getInt(0); }
-        db.close();
-
-
-
-
-        db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO " + dungeon_layout_table_name + " (dungeonId, theme,tiles) VALUES ('','"+d.getTheme()+"','"+tiles+"');");
-        db.execSQL("INSERT INTO " + dungeon_entities_table_name + " (dungeonId, items, enemies, objects) VALUES ('','"+items+"','"+enemies+"','"+objects+"');");
+        db.execSQL("INSERT INTO " + dungeon_layout_table_name + " (theme,tiles) VALUES ('"+d.getTheme()+"','"+tiles+"');");
+        db.execSQL("INSERT INTO " + dungeon_entities_table_name + " (items, enemies, objects) VALUES ('"+items+"','"+enemies+"','"+objects+"');");
         db.close();
     }
 
-    /*
-        db.execSQL("CREATE TABLE " + dungeon_header_table_name + " (dungeonId integer primary key autoincrement not null, userId varchar(64), name varchar(64), categoryId integer, views integer, likes integer, dislikes integer, foreign key (userId) references \" + users_table_name + \" (userId));");
-        db.execSQL("CREATE TABLE " + dungeon_layout_table_name + " (dungeonId integer, size integer(3), theme integer(3), tiles varchar(4096), foreign key (dungeonId) references \" + dungeon_header_table_name + \" (dungeonId));");
-        db.execSQL("CREATE TABLE " + dungeon_entities_table_name + " (dungeonId integer, items varchar(4096), enemies varchar(4096), objects varchar(4096), foreign key (dungeonId) references \" + dungeon_header_table_name + \" (dungeonId));");
-    */
+
 
 
     public void saveDungeon() {
@@ -517,7 +497,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    private String GridCompiler(int[][] grid) {
+    public String GridCompiler(int[][] grid) {
         String dbGrid = "";
 
         for (int i = 0; i < grid.length;i++) {
@@ -529,7 +509,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dbGrid;
     }
 
-    private int[][] GridDecompiler(String tiles) {
+    public int[][] GridDecompiler(String tiles) {
 
         int[][] grid = new int[DungeonData.getDungeonSize()][DungeonData.getDungeonSize()];
         int rowX = 0;

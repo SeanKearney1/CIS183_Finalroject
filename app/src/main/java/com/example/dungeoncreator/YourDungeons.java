@@ -2,6 +2,7 @@ package com.example.dungeoncreator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -64,7 +65,7 @@ public class YourDungeons extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+                Log.d("FUCK",""+(int)lv_dungeons.getAdapter().getItem(position));
                 Dungeon dungeon = db.getDungeonById((int)lv_dungeons.getAdapter().getItem(position));
                 DungeonData.setCurrentDungeon(dungeon);
 
@@ -80,6 +81,7 @@ public class YourDungeons extends AppCompatActivity {
         lv_dungeons.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Dungeon dungeon = db.getDungeonById((int)lv_dungeons.getAdapter().getItem(position));
                 db.deleteDungeon(dungeon.getDungeonId());
                 updateList();

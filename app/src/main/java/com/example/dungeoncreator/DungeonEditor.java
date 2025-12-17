@@ -20,7 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class DungeonEditor extends AppCompatActivity {
 
-    Dungeon dungeon = DungeonData.getCurrentDungeon();
+    Dungeon dungeon;
     DatabaseHelper db;
     Button btn_zoomIn;
     Button btn_zoomOut;
@@ -66,7 +66,11 @@ public class DungeonEditor extends AppCompatActivity {
             return insets;
         });
 
+        dungeon = DungeonData.getCurrentDungeon();
+
         db = new DatabaseHelper(this);
+
+
 
         btn_zoomIn = findViewById(R.id.btn_duengeonEditor_zoomIn);
         btn_zoomOut = findViewById(R.id.btn_duengeonEditor_zoomOut);

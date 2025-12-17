@@ -43,11 +43,13 @@ public class ListViewYourDungeons extends BaseAdapter {
             view = mInflator.inflate(R.layout.your_dungeons_cell,null);
         }
 
+
         TextView Name = view.findViewById(R.id.tv_ydcell_name);
         TextView Category = view.findViewById(R.id.tv_ydcell_category);
         TextView Likes = view.findViewById(R.id.tv_ydcell_likes);
         TextView Dislikes = view.findViewById(R.id.tv_ydcell_dislikes);
         TextView Views = view.findViewById(R.id.tv_ydcell_views);
+
 
         Dungeon dungeon = db.getDungeonById(dungeons.get(position));
 
